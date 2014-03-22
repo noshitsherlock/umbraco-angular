@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body ng-app="app">
+    <div ng-controller="indexController" ng-init="GetNodeData(1070)">
+        <div class="body" ng-bind-html="view.BodyText"></div>
+    </div>
+
+    <!--Angular-->
+    <script src="Scripts/angular.js"></script>
+
+    <!--App-->
+    <script src="Scripts/app/app.js"></script>
+
+    <!--Controllers-->
+    <script src="Scripts/app/controllers/index.js"></script>
+
+    <!--Plugins-->
+    <script src="Scripts/umbraco.angular.js"></script>
+</body>
+</html>

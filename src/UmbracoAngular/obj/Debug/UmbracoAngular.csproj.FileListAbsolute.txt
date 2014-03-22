@@ -1,0 +1,6 @@
+c:\users\contomalb\documents\visual studio 2013\Projects\UmbracoAngular\bin\UmbracoAngular.dll.config
+c:\users\contomalb\documents\visual studio 2013\Projects\UmbracoAngular\bin\UmbracoAngular.dll
+c:\users\contomalb\documents\visual studio 2013\Projects\UmbracoAngular\bin\UmbracoAngular.pdb
+c:\users\contomalb\documents\visual studio 2013\Projects\UmbracoAngular\obj\Debug\UmbracoAngular.dll
+c:\users\contomalb\documents\visual studio 2013\Projects\UmbracoAngular\obj\Debug\UmbracoAngular.pdb
+c:\users\contomalb\documents\visual studio 2013\Projects\UmbracoAngular\obj\Debug\UmbracoAngular.csprojResolveAssemblyReference.cache
