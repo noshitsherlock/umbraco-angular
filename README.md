@@ -269,3 +269,9 @@ namespace UmbracoTest.Services.Models
 ```
 
 ***
+
+***
+### License
+***
+MIT
+***
