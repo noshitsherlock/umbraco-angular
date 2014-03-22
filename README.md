@@ -2,7 +2,7 @@
 # umbraco-angular
 ***
 
-The project is all about using umbraco CMS only for content and consuming it from a different site built in what ever solution.
+The project is all about using umbraco CMS only for content and consuming it from a different site built in what ever technique of choice.
 More than once have I come across the situation where I wan't to (or have to) use a different frontend than the one that comes with umbraco.
 
 I recently worked on a project that used nopcommerce (http://nopcommerce.com/) as the e-commerce platform. Since nopcommerce is
