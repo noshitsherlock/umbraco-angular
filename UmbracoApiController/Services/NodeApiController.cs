@@ -19,7 +19,7 @@ namespace UmbracoTest.Services
             var node = new Node(id);
 
             if (node.Id == 0)
-                return NoteNodeFound();
+                return NodeNotFound();
             
 
             var viewNode = ViewNode.Create(node);
@@ -36,7 +36,7 @@ namespace UmbracoTest.Services
 
             //we don't want the root node, use GetNodeData for that
             if (node.Id == 0 || node.Id == -1)
-                return NoteNodeFound();
+                return NodeNotFound();
 
             var viewNode = ViewNode.Create(node);
 
@@ -65,7 +65,7 @@ namespace UmbracoTest.Services
         /// <summary>
         /// Node not found response
         /// </summary>
-        private HttpResponseMessage NoteNodeFound()
+        private HttpResponseMessage NodeNotFound()
         {
             return JsonResponse(new ViewNode()
             {
