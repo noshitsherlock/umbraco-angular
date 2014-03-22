@@ -4,7 +4,9 @@
     <title></title>
 </head>
 <body ng-app="app">
-    <div ng-controller="indexController" ng-init="GetNodeData(1070)">
+    <!--<div ng-controller="indexController" ng-init="GetNodeData(1070)">-->
+    <div ng-controller="indexController" ng-init="GetNodeByUrl('/about')">
+        <h2 ng-bind="view.Title"></h2>
         <div class="body" ng-bind-html="view.BodyText"></div>
     </div>
 

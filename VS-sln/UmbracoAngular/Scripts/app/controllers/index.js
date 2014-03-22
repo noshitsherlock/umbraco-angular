@@ -1,4 +1,4 @@
-﻿app.controller("indexController", ['$scope', '$sce', 'UmbracoAngular', function($scope, $sce, UmbracoAngular) {
+﻿app.controller("indexController", ['$scope', '$sce', 'UmbracoAngular', function ($scope, $sce, UmbracoAngular) {
     $scope.view = {};
 
     $scope.GetNodeData = function (id) {
@@ -7,7 +7,24 @@
 
             if (data.StatusMessage.Success) {
                 var property = UmbracoAngular.GetProperty("bodyText", data);
+
                 $scope.view.BodyText = $sce.trustAsHtml(property.Value);
+                $scope.view.Title = data.Name;
+            } else {
+                $scope.view.BodyText = $sce.trustAsHtml("<p>" + data.StatusMessage.Message + "</p>");
+            }
+        });
+    };
+
+    $scope.GetNodeByUrl = function (url) {
+        UmbracoAngular.GetNodeByUrl(url).then(function (response) {
+            var data = response.data;
+
+            if (data.StatusMessage.Success) {
+                var property = UmbracoAngular.GetProperty("bodyText", data);
+
+                $scope.view.BodyText = $sce.trustAsHtml(property.Value);
+                $scope.view.Title = data.Name;
             } else {
                 $scope.view.BodyText = $sce.trustAsHtml("<p>" + data.StatusMessage.Message + "</p>");
             }

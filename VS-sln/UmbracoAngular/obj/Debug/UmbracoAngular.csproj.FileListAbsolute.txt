@@ -4,3 +4,9 @@ c:\users\contomalb\documents\visual studio 2013\Projects\UmbracoAngular\bin\Umbr
 c:\users\contomalb\documents\visual studio 2013\Projects\UmbracoAngular\obj\Debug\UmbracoAngular.dll
 c:\users\contomalb\documents\visual studio 2013\Projects\UmbracoAngular\obj\Debug\UmbracoAngular.pdb
 c:\users\contomalb\documents\visual studio 2013\Projects\UmbracoAngular\obj\Debug\UmbracoAngular.csprojResolveAssemblyReference.cache
+C:\Projects\umbraco-angular\umbraco-angular\VS-sln\UmbracoAngular\bin\UmbracoAngular.dll.config
+C:\Projects\umbraco-angular\umbraco-angular\VS-sln\UmbracoAngular\bin\UmbracoAngular.dll
+C:\Projects\umbraco-angular\umbraco-angular\VS-sln\UmbracoAngular\bin\UmbracoAngular.pdb
+C:\Projects\umbraco-angular\umbraco-angular\VS-sln\UmbracoAngular\obj\Debug\UmbracoAngular.csprojResolveAssemblyReference.cache
+C:\Projects\umbraco-angular\umbraco-angular\VS-sln\UmbracoAngular\obj\Debug\UmbracoAngular.dll
+C:\Projects\umbraco-angular\umbraco-angular\VS-sln\UmbracoAngular\obj\Debug\UmbracoAngular.pdb
