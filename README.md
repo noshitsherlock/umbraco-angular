@@ -177,7 +177,7 @@ namespace UmbracoTest.Services
         /// <summary>
         /// Node not found response
         /// </summary>
-        private HttpResponseMessage NodeNodeFound()
+        private HttpResponseMessage NodeNotFound()
         {
             return JsonResponse(new ViewNode()
             {
@@ -216,6 +216,7 @@ Other needed classes.
 /Services/Models/ViewNode.cs
 ```c#
 using System.Collections.Generic;
+using System.Web;
 using umbraco.interfaces;
 using umbraco.NodeFactory;
 
@@ -231,9 +232,12 @@ namespace UmbracoTest.Services.Models
         public IProperty BodyText { get; set; }
         public StatusMessage StatusMessage { get; set; }
         public List<IProperty> Properties { get; set; }
+        public string HostName { get; set; }
 
         public static ViewNode Create(Node node)
         {
+            
+
             return new ViewNode
             {
                 NiceUrl = node.NiceUrl,
@@ -242,8 +246,17 @@ namespace UmbracoTest.Services.Models
                 Level = node.Level,
                 Id = node.Id,
                 Properties = node.PropertiesAsList,
-                StatusMessage = new StatusMessage { Success = true }
+                StatusMessage = new StatusMessage { Success = true },
+                HostName = GetHostname()
             };
+        }
+
+        private static string GetHostname()
+        {
+            if (HttpContext.Current == null)
+                return "";
+
+            return HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority;
         }
     }    
 }
