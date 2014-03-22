@@ -37,30 +37,17 @@ app.controller("indexController", [
     '$scope', '$sce', 'UmbracoAngular', function($scope, $sce, UmbracoAngular) {
         $scope.view = {};
 
-        $scope.GetNodeData = function(id) {
-            UmbracoAngular.GetNodeData(id).then(function(response) {
+        $scope.GetNodeByUrl = function (url) {
+            UmbracoAngular.GetNodeByUrl(url).then(function (response) {
                 var data = response.data;
 
                 if (data.StatusMessage.Success) {
-                    var property = UmbracoAngular.GetProperty("bodyText", data);
+                    var property = UmbracoAngular.GetProperty("aboutTitle", data);                
+                    var image = UmbracoAngular.GetProperty("bannerBackgroundImage", data);
 
                     $scope.view.BodyText = $sce.trustAsHtml(property.Value);
                     $scope.view.Title = data.Name;
-                } else {
-                    $scope.view.BodyText = $sce.trustAsHtml("<p>" + data.StatusMessage.Message + "</p>");
-                }
-            });
-        };
-
-        $scope.GetNodeByUrl = function(url) {
-            UmbracoAngular.GetNodeByUrl(url).then(function(response) {
-                var data = response.data;
-
-                if (data.StatusMessage.Success) {
-                    var property = UmbracoAngular.GetProperty("bodyText", data);
-
-                    $scope.view.BodyText = $sce.trustAsHtml(property.Value);
-                    $scope.view.Title = data.Name;
+                    $scope.view.Image = $sce.trustAsHtml(data.HostName + image.Value);
                 } else {
                     $scope.view.BodyText = $sce.trustAsHtml("<p>" + data.StatusMessage.Message + "</p>");
                 }
@@ -80,10 +67,10 @@ Example html.
     <title></title>
 </head>
 <body ng-app="app">
-    <!--<div ng-controller="indexController" ng-init="GetNodeData(1070)">-->
-    <div ng-controller="indexController" ng-init="GetNodeByUrl('/about')">
+    <div ng-controller="indexController" ng-init="GetNodeByUrl('/')">
         <h2 ng-bind="view.Title"></h2>
         <div class="body" ng-bind-html="view.BodyText"></div>
+        <img src="{{view.Image}}" />
     </div>
 
     <!--Angular-->
@@ -99,7 +86,6 @@ Example html.
     <script src="Scripts/umbraco.angular.js"></script>
 </body>
 </html>
-
 ```
 
 ####Umbraco

@@ -8,8 +8,8 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
     </ul>
-    <!--<div ng-controller="indexController" ng-init="GetNodeData(1070)">-->
-    <div ng-controller="indexController" ng-init="GetNodeByUrl('/')">
+
+    <div ng-controller="aboutController" ng-init="GetNodeByUrl('/about')">
         <h2 ng-bind="view.Title"></h2>
         <div class="body" ng-bind-html="view.BodyText"></div>
         <img src="{{view.Image}}" />

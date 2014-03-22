@@ -2,16 +2,16 @@
 
 'use strict';
 
-(function () {
+(function() {
     var module = angular.module('umbraco.angular', []);
 
-    module.provider('UmbracoAngular', function () {
+    module.provider('UmbracoAngular', function() {
         var Configurer = {};
-        Configurer.init = function (object, config) {
+        Configurer.init = function(object, config) {
             object.configuration = config;
 
             config.apiEndpoint = config.apiEndpoint;
-            object.setApiEndpoint = function (apiEndPoint) {
+            object.setApiEndpoint = function(apiEndPoint) {
                 config.apiEndpoint = apiEndPoint;
             };
         };
@@ -20,48 +20,53 @@
 
         Configurer.init(this, globalConfiguration);
 
-        this.$get = ['$http', '$q', function ($http, $q) {
-            function createService(config) {
-                var service = {};
+        this.$get = [
+            '$http', '$q', function($http, $q) {
 
-                function GetNodeData(id) {
-                    var deferred = $q.defer();
+                function createService(config) {
+                    var service = {};
 
-                    $http.get(config.apiEndpoint + "getnodedata/" + id).then(function (response) {
-                        deferred.resolve(response);
-                    });
+                    function GetNodeData(id) {
+                        var deferred = $q.defer();
 
-                    return deferred.promise;
-                }
+                        $http.get(config.apiEndpoint + "getnodedata/" + id).then(function(response) {
+                            deferred.resolve(response);
+                        });
 
-                function GetNodeByUrl(url) {
-                    var deferred = $q.defer();
-
-                    $http.get(config.apiEndpoint + "getnodebyurl?url=" + url).then(function (response) {
-                        deferred.resolve(response);
-                    });
-
-                    return deferred.promise;
-                }
-
-                function GetProperty(alias, data) {
-                    for (var i = 0; i < data.Properties.length; i++) {
-                        if (data.Properties[i].Alias == alias) {
-                            return data.Properties[i];
-                        }
+                        return deferred.promise;
                     }
-                    return { Value: "Property not found" };
-                };
 
-                Configurer.init(service, config);
-                service.GetNodeData = GetNodeData;
-                service.GetProperty = GetProperty;
-                service.GetNodeByUrl = GetNodeByUrl;
-                return service;
+                    function GetNodeByUrl(url) {
+                        var deferred = $q.defer();
+
+                        if (url === '')
+                            url = window.location.pathname;
+
+                        $http.get(config.apiEndpoint + "getnodebyurl?url=" + url).then(function(response) {
+                            deferred.resolve(response);
+                        });
+
+                        return deferred.promise;
+                    }
+
+                    function GetProperty(alias, data) {
+                        for (var i = 0; i < data.Properties.length; i++) {
+                            if (data.Properties[i].Alias == alias) {
+                                return data.Properties[i];
+                            }
+                        }
+                        return { Value: "Property not found" };
+                    };
+
+                    Configurer.init(service, config);
+                    service.GetNodeData = GetNodeData;
+                    service.GetProperty = GetProperty;
+                    service.GetNodeByUrl = GetNodeByUrl;
+                    return service;
+                }
+
+                return createService(globalConfiguration);
             }
-
-            return createService(globalConfiguration);
-        }
         ];
     });
 })();
