@@ -3,6 +3,11 @@
 ***
 
 The project is all about using umbraco CMS only for content and consuming it from a different site built in what ever solution.
+More than once have I come across the situation where I wan't to use a different frontend than the one that comes with umbraco.
+
+I recently worked on a project that used nopcommerce (http://nopcommerce.com/) as the e-commerce platform. Since nopcommerce is
+a commerce solution it does not contain any good CMS support and in todays market you have to very dynamic and change all the time so some kind
+of CMS is a must! Or else, you are doing it wrong ;)
 
 ***
 
