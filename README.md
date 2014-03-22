@@ -28,7 +28,9 @@ Example controller.
 
 /scripts/app/controllers/index.js
 ```javascript
-app.controller("indexController", ['$scope', '$sce', 'UmbracoAngular', function ($scope, $sce, UmbracoAngular) {
+app.controller("indexController", ['$scope', '$sce', 'UmbracoAngular', 
+                function ($scope, $sce, UmbracoAngular) {
+    
     $scope.view = {};
 
     $scope.GetNodeData = function (id) {
