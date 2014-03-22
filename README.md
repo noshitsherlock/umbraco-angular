@@ -9,10 +9,6 @@ The project is all about using umbraco CMS only for content and consuming it fro
 ***
 ### Start
 ***
-####Umbraco
-For testing, create a new VS solution and download/install the umbraco cms nuget package. Then when installation is complete install the umbraco txt starter kit
-to have something to start with. In my example below I have used that starter kit.
-
 ####AngularJS
 Include angular.js and the umbraco-angular.js file (see example html).
 
@@ -23,7 +19,7 @@ Start by creating your application and injecting the umbraco-angular module and 
 var app = angular.module("app", ['umbraco.angular']);
 
 app.config(function (UmbracoAngularProvider) {
-    UmbracoAngularProvider.setApiEndpoint("URL OF THE UMBRACO_NODE_API_CONTROLLER");
+    UmbracoAngularProvider.setApiEndpoint("URL OF THE UMBRACO NODE API CONTROLLER");
 });
 
 ```
@@ -98,6 +94,90 @@ Example html.
 </body>
 </html>
 
+```
+
+####Umbraco
+For testing, create a new VS solution (I called it UmbracoTest) and download/install the umbraco cms nuget package. Then when installation is complete install the umbraco txt starter kit
+to have something to start with. In my example below I have used that starter kit. I created a folder called services to put my UmbracoApiController in.
+
+/Services/NodeApiController.cs
+```c#
+using System.Net.Http;
+using System.Text;
+using Newtonsoft.Json;
+using umbraco;
+using umbraco.NodeFactory;
+using Umbraco.Web.WebApi;
+using UmbracoTest.Services.Models;
+
+namespace UmbracoTest.Services
+{
+    [AllowCrossSiteJson]
+    public class NodeApiController : UmbracoApiController
+    {       
+        /// <summary>
+        /// Gets the umbraco node by id
+        /// </summary>
+        public HttpResponseMessage GetNodeData(int id)
+        {
+            var node = new Node(id);
+
+            if (node.Id == 0)
+                return NoteNodeFound();
+            
+
+            var viewNode = ViewNode.Create(node);
+
+            return JsonResponse(viewNode);
+        }
+
+        /// <summary>
+        /// Gets the umbraco node by url, example : /about        
+        /// </summary>
+        public HttpResponseMessage GetNodeByUrl(string url)
+        {
+            var node = uQuery.GetNodeByUrl(url);
+
+            //we don't want the root node, use GetNodeData for that
+            if (node.Id == 0 || node.Id == -1)
+                return NoteNodeFound();
+
+            var viewNode = ViewNode.Create(node);
+
+            return JsonResponse(viewNode);
+        }
+
+        /// <summary>
+        /// Create response object
+        /// </summary>
+        private HttpResponseMessage JsonResponse(object obj)
+        {
+            return new HttpResponseMessage
+            {
+                Content = JsonContent(obj),                
+            };
+        }
+
+        /// <summary>
+        /// Serialize object to json
+        /// </summary>
+        private StringContent JsonContent(object obj)
+        {
+            return new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
+        }
+
+        /// <summary>
+        /// Node not found response
+        /// </summary>
+        private HttpResponseMessage NoteNodeFound()
+        {
+            return JsonResponse(new ViewNode()
+            {
+                StatusMessage = new StatusMessage { Success = false, Message = "Node not found" }
+            });
+        }
+    }
+}
 ```
 
 ***
