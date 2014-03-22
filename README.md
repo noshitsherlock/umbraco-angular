@@ -3,11 +3,16 @@
 ***
 
 The project is all about using umbraco CMS only for content and consuming it from a different site built in what ever solution.
-More than once have I come across the situation where I wan't to use a different frontend than the one that comes with umbraco.
+More than once have I come across the situation where I wan't to (or have to) use a different frontend than the one that comes with umbraco.
 
 I recently worked on a project that used nopcommerce (http://nopcommerce.com/) as the e-commerce platform. Since nopcommerce is
 a commerce solution it does not contain any good CMS support and in todays market you have to very dynamic and change all the time so some kind
 of CMS is a must! Or else, you are doing it wrong ;)
+
+Below you can read about the following. Creating a simple application with angularjs. Setting up the application with the UmbracoAngular provider.
+
+I have also included the entire UmbracoApiController that I use to extract data from umbraco. I have based my example on a new umbraco 7.0.4 installation
+from nuget and installed the umbraco txt starter kit.
 
 ***
 
