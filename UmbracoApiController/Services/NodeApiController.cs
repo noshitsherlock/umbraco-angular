@@ -1,6 +1,5 @@
 ﻿using System.Net.Http;
 using System.Text;
-using System.Web;
 using Newtonsoft.Json;
 using umbraco;
 using umbraco.NodeFactory;
@@ -73,22 +72,5 @@ namespace UmbracoTest.Services
                 StatusMessage = new StatusMessage { Success = false, Message = "Node not found" }
             });
         }
-
-        private HttpContextWrapper GetHttpContext(HttpRequestMessage request = null)
-        {            
-            if (request.Properties.ContainsKey("MS_HttpContext"))
-            {
-                return ((HttpContextWrapper)request.Properties["MS_HttpContext"]);
-            }
-            else if (HttpContext.Current != null)
-            {
-                return new HttpContextWrapper(HttpContext.Current);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
     }
 }
