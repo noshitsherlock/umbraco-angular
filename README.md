@@ -19,7 +19,7 @@ Start by creating your application and injecting the umbraco-angular module and 
 var app = angular.module("app", ['umbraco.angular']);
 
 app.config(function (UmbracoAngularProvider) {
-    UmbracoAngularProvider.setApiEndpoint("URL OF THE UMBRACO NODE API CONTROLLER");
+    UmbracoAngularProvider.setApiEndpoint("http://localhost:PORT/umbraco/api/nodeapi/");
 });
 
 ```
@@ -98,8 +98,10 @@ Example html.
 ```
 
 ####Umbraco
-For testing, create a new VS solution (I called it UmbracoTest) and download/install the umbraco cms nuget package. Then when installation is complete install the umbraco txt starter kit
+For testing, create a new VS solution (I called it UmbracoTest) and download/install the umbraco cms nuget package. Then when the installation is complete install the umbraco txt starter kit
 to have something to start with. In my example below I have used that starter kit. I created a folder called services to put my UmbracoApiController in.
+
+When you inherit from UmbracoApiController, the default route is http://site/umbraco/api/{nameofcontoller}/{method}/{param}, ex http://localhost:PORT/umbraco/api/nodeapi/getnodedata/1070
 
 /Services/NodeApiController.cs
 ```c#
@@ -170,7 +172,7 @@ namespace UmbracoTest.Services
         /// <summary>
         /// Node not found response
         /// </summary>
-        private HttpResponseMessage NoteNodeFound()
+        private HttpResponseMessage NodeNodeFound()
         {
             return JsonResponse(new ViewNode()
             {
