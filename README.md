@@ -13,13 +13,13 @@ AngularJS
 Start by creating your application and injecting the umbraco-angular module and configuring it.
 
 app.js
-'''javascript
+```javascript
 var app = angular.module("app", ['umbraco.angular']);
 
 app.config(function (UmbracoAngularProvider) {
     UmbracoAngularProvider.setApiEndpoint("URL OF THE UMBRACO_NODE_API_CONTROLLER");
 });
 
-'''
+```
 
 ***
