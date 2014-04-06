@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 using umbraco;
@@ -24,6 +26,18 @@ namespace UmbracoTest.Services
             var viewNode = ViewNode.Create(node);
 
             return JsonResponse(viewNode);
+        }
+
+        public HttpResponseMessage GetNodesByDocumentType(string documentTypeAlias)
+        {
+            var nodes = uQuery.GetNodesByType(documentTypeAlias).ToList();
+
+            if (!nodes.Any())
+                return NodeNotFound();
+
+            var viewNodes = ViewNode.CreateByList(nodes);
+
+            return JsonResponse(viewNodes);
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.UI.WebControls;
 using umbraco.interfaces;
 using umbraco.NodeFactory;
 
@@ -14,10 +13,10 @@ namespace UmbracoTest.Services.Models
         public int Level { get; set; }
         public string Name { get; set; }
         public string NiceUrl { get; set; }
-        public IProperty BodyText { get; set; }
-        public StatusMessage StatusMessage { get; set; }
-        public List<IProperty> Properties { get; set; }
         public string HostName { get; set; }
+        public IProperty BodyText { get; set; }
+        public List<IProperty> Properties { get; set; }
+        public StatusMessage StatusMessage { get; set; }
         public List<ViewNode> Children { get; set; } 
 
         public static ViewNode Create(Node node)
@@ -37,6 +36,13 @@ namespace UmbracoTest.Services.Models
             GetChildrenRecursive(node, viewNode);
 
             return viewNode;
+        }
+
+        public static List<ViewNode> CreateByList(List<Node> nodes)
+        {
+            var viewNodes = nodes.Select(Create).ToList();
+
+            return viewNodes;
         }
 
         private static void GetChildrenRecursive(INode node, ViewNode viewNode)
