@@ -49,6 +49,19 @@
                         return deferred.promise;
                     }
 
+                    function GetNodesByDocumentTypeAlias(documentTypeAlias) {
+                        var deferred = $q.defer();
+
+                        if (url === '')
+                            url = window.location.pathname;
+
+                        $http.get(config.apiEndpoint + "getnodesbydocumenttypealias?documentTypeAlias=" + documentTypeAlias).then(function (response) {
+                            deferred.resolve(response);
+                        });
+
+                        return deferred.promise;
+                    }
+
                     function GetProperty(alias, data) {
                         for (var i = 0; i < data.Properties.length; i++) {
                             if (data.Properties[i].Alias == alias) {
@@ -62,6 +75,7 @@
                     service.GetNodeData = GetNodeData;
                     service.GetProperty = GetProperty;
                     service.GetNodeByUrl = GetNodeByUrl;
+                    service.GetNodesByDocumentTypeAlias = GetNodesByDocumentTypeAlias;
                     return service;
                 }
 
