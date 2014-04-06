@@ -20,7 +20,6 @@ namespace UmbracoTest.Services
 
             if (node.Id == 0)
                 return NodeNotFound();
-            
 
             var viewNode = ViewNode.Create(node);
 
