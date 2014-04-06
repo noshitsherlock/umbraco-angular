@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 using umbraco.interfaces;
 using umbraco.NodeFactory;
 
@@ -16,12 +18,11 @@ namespace UmbracoTest.Services.Models
         public StatusMessage StatusMessage { get; set; }
         public List<IProperty> Properties { get; set; }
         public string HostName { get; set; }
+        public List<ViewNode> Children { get; set; } 
 
         public static ViewNode Create(Node node)
         {
-            
-
-            return new ViewNode
+            var viewNode =  new ViewNode
             {
                 NiceUrl = node.NiceUrl,
                 TemplateId = node.template,
@@ -32,6 +33,36 @@ namespace UmbracoTest.Services.Models
                 StatusMessage = new StatusMessage { Success = true },
                 HostName = GetHostname()
             };
+
+            GetChildrenRecursive(node, viewNode);
+
+            return viewNode;
+        }
+
+        private static void GetChildrenRecursive(INode node, ViewNode viewNode)
+        {
+            viewNode.Children = new List<ViewNode>();
+
+            foreach (var child in node.ChildrenAsList)
+            {
+                var temp = new ViewNode
+                {
+                    NiceUrl = child.NiceUrl,
+                    TemplateId = child.template,
+                    Name = child.Name,
+                    Level = child.Level,
+                    Id = child.Id,
+                    Properties = child.PropertiesAsList,
+                    StatusMessage = new StatusMessage {Success = true},
+                    HostName = GetHostname(),
+                    Children = new List<ViewNode>()
+                };
+
+                viewNode.Children.Add(temp);
+
+                if(child.ChildrenAsList.Any())
+                    GetChildrenRecursive(child, temp);
+            }
         }
 
         private static string GetHostname()
