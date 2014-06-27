@@ -272,6 +272,22 @@ namespace UmbracoTest.Services.Models
 ```
 <a name="ie8"></a>
 ### IE8
+To make all this work in Internet Explorer 8 we need to use project called [xdomain](https://github.com/jpillora/xdomain). A really awesome project that is a javascript CORS alternative and it is really easy to use.
+
+In the root of your umbraco installation put a file called proxy.html with the following content. In the master attribute put the host of the site calling the nodeapi service.
+
+```html
+<!DOCTYPE html>
+<script src="http://jpillora.com/xdomain/dist/0.6/xdomain.min.js" master="http://host.calling.the.service.com"></script>
+```
+
+Then master template or the html page that calls the service. Add this script at the top, before any other libraries has been loaded. In the slave attribute put the location of the proxy.html file.
+
+```html
+<script src="http://jpillora.com/xdomain/dist/0.6/xdomain.min.js" slave="http://your.umbraco.site/proxy.html"></script>
+```
+
+Thats all!
 
 ***
 
