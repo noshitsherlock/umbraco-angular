@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Umbraco-angular : Use umbraco as a CMS, without having to use the umbraco frontend. Perfect way to get CMS functionality into legacy/new applications." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Umbraco-angular</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/noshitsherlock/umbraco-angular">View on GitHub</a>
+
+          <h1 id="project_title">Umbraco-angular</h1>
+          <h2 id="project_tagline">Use umbraco as a CMS, without having to use the umbraco frontend. Perfect way to get CMS functionality into legacy/new applications.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/noshitsherlock/umbraco-angular/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/noshitsherlock/umbraco-angular/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <hr><h1>
+<a name="umbraco-angular" class="anchor" href="#umbraco-angular"><span class="octicon octicon-link"></span></a>umbraco-angular</h1>
+
+<hr><p>The project is all about using umbraco CMS only for content and consuming it from a different site built in what ever technique of choice.
+More than once have I come across the situation where I wan't to (or have to) use a different frontend than the one that comes with umbraco.</p>
+
+<p>I recently worked on a project that used nopcommerce (<a href="http://nopcommerce.com/">http://nopcommerce.com/</a>) as the e-commerce platform. Since nopcommerce is
+a commerce solution it does not contain any good CMS support and in todays market you have to very dynamic and change all the time so some kind
+of CMS is a must! Or else, you are doing it wrong ;)</p>
+
+<p>Below you can read about the following. Creating a simple application with angularjs. Setting up the application with the UmbracoAngular provider.</p>
+
+<p>I have also included the entire UmbracoApiController that I use to extract data from umbraco. I have based my example on a new umbraco 7.0.4 installation
+from nuget and installed the umbraco txt starter kit.</p>
+
+<ul>
+<li><a href="#angularjs">AngularJS</a></li>
+<li><a href="#umbraco">Umbraco</a></li>
+<li><a href="#ie8">IE8</a></li>
+</ul><hr><hr><h3>
+<a name="start" class="anchor" href="#start"><span class="octicon octicon-link"></span></a>Start</h3>
+
+<hr><p><a name="angularjs"></a></p>
+
+<h4>
+<a name="angularjs" class="anchor" href="#angularjs"><span class="octicon octicon-link"></span></a>AngularJS</h4>
+
+<p>Include angular.js and the umbraco-angular.js file (see example html).</p>
+
+<p>Start by creating your application and injecting the umbraco-angular module (located under src/scripts/umbraco.angular.js) and configuring it.</p>
+
+<p>/scripts/app/app.js</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">"app"</span><span class="p">,</span> <span class="p">[</span><span class="s1">'umbraco.angular'</span><span class="p">]);</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">config</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">UmbracoAngularProvider</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">UmbracoAngularProvider</span><span class="p">.</span><span class="nx">setApiEndpoint</span><span class="p">(</span><span class="s2">"http://localhost:PORT/umbraco/api/nodeapi/"</span><span class="p">);</span>
+<span class="p">});</span>
+
+</pre></div>
+
+<p>Example controller.</p>
+
+<p>/scripts/app/controllers/index.js</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">app</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="s2">"indexController"</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'$scope'</span><span class="p">,</span> <span class="s1">'$sce'</span><span class="p">,</span> <span class="s1">'UmbracoAngular'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$sce</span><span class="p">,</span> <span class="nx">UmbracoAngular</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">view</span> <span class="o">=</span> <span class="p">{};</span>
+
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">GetNodeByUrl</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">UmbracoAngular</span><span class="p">.</span><span class="nx">GetNodeByUrl</span><span class="p">(</span><span class="nx">url</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">StatusMessage</span><span class="p">.</span><span class="nx">Success</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="nx">property</span> <span class="o">=</span> <span class="nx">UmbracoAngular</span><span class="p">.</span><span class="nx">GetProperty</span><span class="p">(</span><span class="s2">"aboutTitle"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>                
+                    <span class="kd">var</span> <span class="nx">image</span> <span class="o">=</span> <span class="nx">UmbracoAngular</span><span class="p">.</span><span class="nx">GetProperty</span><span class="p">(</span><span class="s2">"bannerBackgroundImage"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+
+                    <span class="nx">$scope</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">BodyText</span> <span class="o">=</span> <span class="nx">$sce</span><span class="p">.</span><span class="nx">trustAsHtml</span><span class="p">(</span><span class="nx">property</span><span class="p">.</span><span class="nx">Value</span><span class="p">);</span>
+                    <span class="nx">$scope</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">Title</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">Name</span><span class="p">;</span>
+                    <span class="nx">$scope</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">Image</span> <span class="o">=</span> <span class="nx">$sce</span><span class="p">.</span><span class="nx">trustAsHtml</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">HostName</span> <span class="o">+</span> <span class="nx">image</span><span class="p">.</span><span class="nx">Value</span><span class="p">);</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="nx">$scope</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">BodyText</span> <span class="o">=</span> <span class="nx">$sce</span><span class="p">.</span><span class="nx">trustAsHtml</span><span class="p">(</span><span class="s2">"&lt;p&gt;"</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">StatusMessage</span><span class="p">.</span><span class="nx">Message</span> <span class="o">+</span> <span class="s2">"&lt;/p&gt;"</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">]);</span>
+</pre></div>
+
+<p>Example html.</p>
+
+<p>/index.html</p>
+
+<div class="highlight highlight-html"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">"http://www.w3.org/1999/xhtml"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body</span> <span class="na">ng-app=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">ng-controller=</span><span class="s">"indexController"</span> <span class="na">ng-init=</span><span class="s">"GetNodeByUrl('/')"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h2</span> <span class="na">ng-bind=</span><span class="s">"view.Title"</span><span class="nt">&gt;&lt;/h2&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"body"</span> <span class="na">ng-bind-html=</span><span class="s">"view.BodyText"</span><span class="nt">&gt;&lt;/div&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"{{view.Image}}"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="c">&lt;!--Angular--&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"Scripts/angular.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+    <span class="c">&lt;!--App--&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"Scripts/app/app.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+    <span class="c">&lt;!--Controllers--&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"Scripts/app/controllers/index.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+    <span class="c">&lt;!--Plugins--&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"Scripts/umbraco.angular.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+
+<p><a name="umbraco"></a></p>
+
+<h4>
+<a name="umbraco" class="anchor" href="#umbraco"><span class="octicon octicon-link"></span></a>Umbraco</h4>
+
+<p>For testing, create a new VS solution (I called it UmbracoTest) and download/install the umbraco cms nuget package. Then when the installation is complete install the umbraco txt starter kit
+to have something to start with. In my example below I have used that starter kit. I created a folder called services to put my UmbracoApiController in.</p>
+
+<p>When you inherit from UmbracoApiController, the default route is http://site/umbraco/api/{nameofcontoller}/{method}/{param}, ex http://localhost:PORT/umbraco/api/nodeapi/getnodedata/1070</p>
+
+<p>/Services/NodeApiController.cs</p>
+
+<div class="highlight highlight-c#"><pre><span class="k">using</span> <span class="nn">System.Net.Http</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">umbraco</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">umbraco.NodeFactory</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Umbraco.Web.WebApi</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UmbracoTest.Services.Models</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">UmbracoTest.Services</span>
+<span class="p">{</span>
+<span class="na">    [AllowCrossSiteJson]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">NodeApiController</span> <span class="p">:</span> <span class="n">UmbracoApiController</span>
+    <span class="p">{</span>       
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Gets the umbraco node by id</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">public</span> <span class="n">HttpResponseMessage</span> <span class="nf">GetNodeData</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">node</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+                <span class="k">return</span> <span class="nf">NodeNotFound</span><span class="p">();</span>
+
+
+            <span class="kt">var</span> <span class="n">viewNode</span> <span class="p">=</span> <span class="n">ViewNode</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+
+            <span class="k">return</span> <span class="nf">JsonResponse</span><span class="p">(</span><span class="n">viewNode</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Gets the umbraco node by url, example : /about        </span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">public</span> <span class="n">HttpResponseMessage</span> <span class="nf">GetNodeByUrl</span><span class="p">(</span><span class="kt">string</span> <span class="n">url</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">node</span> <span class="p">=</span> <span class="n">uQuery</span><span class="p">.</span><span class="n">GetNodeByUrl</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+
+            <span class="c1">//we don't want the root node, use GetNodeData for that</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="m">0</span> <span class="p">||</span> <span class="n">node</span><span class="p">.</span><span class="n">Id</span> <span class="p">==</span> <span class="p">-</span><span class="m">1</span><span class="p">)</span>
+                <span class="k">return</span> <span class="nf">NodeNotFound</span><span class="p">();</span>
+
+            <span class="kt">var</span> <span class="n">viewNode</span> <span class="p">=</span> <span class="n">ViewNode</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+
+            <span class="k">return</span> <span class="nf">JsonResponse</span><span class="p">(</span><span class="n">viewNode</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Create response object</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">private</span> <span class="n">HttpResponseMessage</span> <span class="nf">JsonResponse</span><span class="p">(</span><span class="kt">object</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="n">HttpResponseMessage</span>
+            <span class="p">{</span>
+                <span class="n">Content</span> <span class="p">=</span> <span class="n">JsonContent</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span>                
+            <span class="p">};</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Serialize object to json</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">private</span> <span class="n">StringContent</span> <span class="nf">JsonContent</span><span class="p">(</span><span class="kt">object</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">StringContent</span><span class="p">(</span><span class="n">JsonConvert</span><span class="p">.</span><span class="n">SerializeObject</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">/// &lt;summary&gt;</span>
+        <span class="c1">/// Node not found response</span>
+        <span class="c1">/// &lt;/summary&gt;</span>
+        <span class="k">private</span> <span class="n">HttpResponseMessage</span> <span class="nf">NodeNotFound</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">JsonResponse</span><span class="p">(</span><span class="k">new</span> <span class="n">ViewNode</span><span class="p">()</span>
+            <span class="p">{</span>
+                <span class="n">StatusMessage</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StatusMessage</span> <span class="p">{</span> <span class="n">Success</span> <span class="p">=</span> <span class="k">false</span><span class="p">,</span> <span class="n">Message</span> <span class="p">=</span> <span class="s">"Node not found"</span> <span class="p">}</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Also allow CORS. This need to be modified if you wan't to allow any other hosts than localhost.
+/Services/AllowCrossSiteJsonAttribute.cs</p>
+
+<div class="highlight highlight-c#"><pre><span class="k">using</span> <span class="nn">System.Web.Http.Filters</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">UmbracoTest.Services</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">AllowCrossSiteJsonAttribute</span> <span class="p">:</span> <span class="n">ActionFilterAttribute</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnActionExecuted</span><span class="p">(</span><span class="n">HttpActionExecutedContext</span> <span class="n">actionExecutedContext</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">actionExecutedContext</span><span class="p">.</span><span class="n">Response</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>   
+                <span class="k">if</span><span class="p">(</span><span class="n">actionExecutedContext</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">RequestMessage</span><span class="p">.</span><span class="n">RequestUri</span><span class="p">.</span><span class="n">Host</span><span class="p">.</span><span class="n">ToLower</span><span class="p">()</span> <span class="p">==</span> <span class="s">"localhost"</span><span class="p">)</span>
+                    <span class="n">actionExecutedContext</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">"Access-Control-Allow-Origin"</span><span class="p">,</span> <span class="s">"*"</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="k">base</span><span class="p">.</span><span class="n">OnActionExecuted</span><span class="p">(</span><span class="n">actionExecutedContext</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Other needed classes.</p>
+
+<p>/Services/Models/ViewNode.cs</p>
+
+<div class="highlight highlight-c#"><pre><span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">umbraco.interfaces</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">umbraco.NodeFactory</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">UmbracoTest.Services.Models</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">ViewNode</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">TemplateId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Level</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">NiceUrl</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">IProperty</span> <span class="n">BodyText</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">StatusMessage</span> <span class="n">StatusMessage</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">IProperty</span><span class="p">&gt;</span> <span class="n">Properties</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">HostName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="n">ViewNode</span> <span class="nf">Create</span><span class="p">(</span><span class="n">Node</span> <span class="n">node</span><span class="p">)</span>
+        <span class="p">{</span>            
+            <span class="k">return</span> <span class="k">new</span> <span class="n">ViewNode</span>
+            <span class="p">{</span>
+                <span class="n">NiceUrl</span> <span class="p">=</span> <span class="n">node</span><span class="p">.</span><span class="n">NiceUrl</span><span class="p">,</span>
+                <span class="n">TemplateId</span> <span class="p">=</span> <span class="n">node</span><span class="p">.</span><span class="n">template</span><span class="p">,</span>
+                <span class="n">Name</span> <span class="p">=</span> <span class="n">node</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+                <span class="n">Level</span> <span class="p">=</span> <span class="n">node</span><span class="p">.</span><span class="n">Level</span><span class="p">,</span>
+                <span class="n">Id</span> <span class="p">=</span> <span class="n">node</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span>
+                <span class="n">Properties</span> <span class="p">=</span> <span class="n">node</span><span class="p">.</span><span class="n">PropertiesAsList</span><span class="p">,</span>
+                <span class="n">StatusMessage</span> <span class="p">=</span> <span class="k">new</span> <span class="n">StatusMessage</span> <span class="p">{</span> <span class="n">Success</span> <span class="p">=</span> <span class="k">true</span> <span class="p">},</span>
+                <span class="n">HostName</span> <span class="p">=</span> <span class="n">GetHostname</span><span class="p">()</span>
+            <span class="p">};</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">static</span> <span class="kt">string</span> <span class="nf">GetHostname</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">HttpContext</span><span class="p">.</span><span class="n">Current</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+                <span class="k">return</span> <span class="s">""</span><span class="p">;</span>
+
+            <span class="k">return</span> <span class="n">HttpContext</span><span class="p">.</span><span class="n">Current</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Url</span><span class="p">.</span><span class="n">Scheme</span> <span class="p">+</span> <span class="s">"://"</span> <span class="p">+</span> <span class="n">HttpContext</span><span class="p">.</span><span class="n">Current</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Url</span><span class="p">.</span><span class="n">Authority</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>    
+<span class="p">}</span>
+</pre></div>
+
+<p>/Services/Models/StatusMessage.cs</p>
+
+<div class="highlight highlight-c#"><pre><span class="k">namespace</span> <span class="nn">UmbracoTest.Services.Models</span>
+<span class="p">{</span>
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Object that indicates if the node was found or not.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">StatusMessage</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">bool</span> <span class="n">Success</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><a name="ie8"></a></p>
+
+<h3>
+<a name="ie8" class="anchor" href="#ie8"><span class="octicon octicon-link"></span></a>IE8</h3>
+
+<hr><hr><h3>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
+
+<hr><p>MIT</p>
+
+<hr>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Umbraco-angular maintained by <a href="https://github.com/noshitsherlock">noshitsherlock</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
