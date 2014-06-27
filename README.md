@@ -16,6 +16,7 @@ from nuget and installed the umbraco txt starter kit.
 
 * [AngularJS](#angularjs)
 * [Umbraco](#umbraco)
+* [IE8](#ie8)
 
 ***
 
@@ -269,6 +270,8 @@ namespace UmbracoTest.Services.Models
     }
 }
 ```
+<a name="ie8"></a>
+### IE8
 
 ***
 
