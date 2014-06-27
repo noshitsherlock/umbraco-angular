@@ -14,8 +14,8 @@ Below you can read about the following. Creating a simple application with angul
 I have also included the entire UmbracoApiController that I use to extract data from umbraco. I have based my example on a new umbraco 7.0.4 installation
 from nuget and installed the umbraco txt starter kit.
 
-*[AngularJS](#angularjs)
-*[Umbraco](#umbraco)
+* [AngularJS](#angularjs)
+* [Umbraco](#umbraco)
 
 ***
 
