@@ -14,9 +14,9 @@ Below you can read about the following. Creating a simple application with angul
 I have also included the entire UmbracoApiController that I use to extract data from umbraco. I have based my example on a new umbraco 7.0.4 installation
 from nuget and installed the umbraco txt starter kit.
 
-* [AngularJS](#angularjs)
-* [Umbraco](#umbraco)
-* [IE8](#ie8)
+* [AngularJS application setup](#angularjs)
+* [Umbraco application setup](#umbraco)
+* [Make all this work in IE8](#ie8)
 
 ***
 
@@ -41,7 +41,7 @@ app.config(function (UmbracoAngularProvider) {
 
 Example controller.
 
-/scripts/app/controllers/index.js
+**/scripts/app/controllers/index.js**
 ```javascript
 app.controller("indexController", [
     '$scope', '$sce', 'UmbracoAngular', function($scope, $sce, UmbracoAngular) {
@@ -69,7 +69,7 @@ app.controller("indexController", [
 
 Example html.
 
-/index.html
+**/index.html**
 ```html
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -99,12 +99,12 @@ Example html.
 ```
 <a name="umbraco"></a>
 ####Umbraco
-For testing, create a new VS solution (I called it UmbracoTest) and download/install the umbraco cms nuget package. Then when the installation is complete install the umbraco txt starter kit
+For testing, create a new VS solution (I called it UmbracoTest) and download/install the umbraco cms nuget package. When the installation is complete install the umbraco txt starter kit
 to have something to start with. In my example below I have used that starter kit. I created a folder called services to put my UmbracoApiController in.
 
-When you inherit from UmbracoApiController, the default route is http://site/umbraco/api/{nameofcontoller}/{method}/{param}, ex http://localhost:PORT/umbraco/api/nodeapi/getnodedata/1070
+When you inherit from UmbracoApiController, the default route is `http://site/umbraco/api/{nameofcontoller}/{method}/{param}`, ex `http://localhost:PORT/umbraco/api/nodeapi/getnodedata/1070`
 
-/Services/NodeApiController.cs
+**/Services/NodeApiController.cs**
 ```c#
 using System.Net.Http;
 using System.Text;
@@ -185,7 +185,7 @@ namespace UmbracoTest.Services
 ```
 
 Also allow CORS. This need to be modified if you wan't to allow any other hosts than localhost.
-/Services/AllowCrossSiteJsonAttribute.cs
+**/Services/AllowCrossSiteJsonAttribute.cs**
 ```c#
 using System.Web.Http.Filters;
 
@@ -209,7 +209,7 @@ namespace UmbracoTest.Services
 
 Other needed classes.
 
-/Services/Models/ViewNode.cs
+**/Services/Models/ViewNode.cs**
 ```c#
 using System.Collections.Generic;
 using System.Web;
@@ -256,7 +256,7 @@ namespace UmbracoTest.Services.Models
 }
 ```
 
-/Services/Models/StatusMessage.cs
+**/Services/Models/StatusMessage.cs**
 ```c#
 namespace UmbracoTest.Services.Models
 {
@@ -272,7 +272,7 @@ namespace UmbracoTest.Services.Models
 ```
 <a name="ie8"></a>
 ### IE8
-To make all this work in Internet Explorer 8 we need to use project called [xdomain](https://github.com/jpillora/xdomain). A really awesome project that is a javascript CORS alternative and it is really easy to use.
+To make all this work in Internet Explorer 8 we need to use a project called [xdomain](https://github.com/jpillora/xdomain). A really awesome project that is a javascript CORS alternative and it is really easy to use.
 
 In the root of your umbraco installation put a file called proxy.html with the following content. In the master attribute put the host of the site calling the nodeapi service.
 
