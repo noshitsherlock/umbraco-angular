@@ -185,6 +185,7 @@ namespace UmbracoTest.Services
 ```
 
 Also allow CORS. This need to be modified if you wan't to allow any other hosts than localhost.
+
 **/Services/AllowCrossSiteJsonAttribute.cs**
 ```c#
 using System.Web.Http.Filters;
@@ -271,7 +272,7 @@ namespace UmbracoTest.Services.Models
 }
 ```
 <a name="ie8"></a>
-### IE8
+### Make all this work in IE8
 To make all this work in Internet Explorer 8 we need to use a project called [xdomain](https://github.com/jpillora/xdomain). A really awesome project that is a javascript CORS alternative and it is really easy to use.
 
 In the root of your umbraco installation put a file called proxy.html with the following content. In the master attribute put the host of the site calling the nodeapi service.
