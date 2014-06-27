@@ -14,11 +14,15 @@ Below you can read about the following. Creating a simple application with angul
 I have also included the entire UmbracoApiController that I use to extract data from umbraco. I have based my example on a new umbraco 7.0.4 installation
 from nuget and installed the umbraco txt starter kit.
 
+*[AngularJS](#angularjs)
+*[Umbraco](#umbraco)
+
 ***
 
 ***
 ### Start
 ***
+<a name="angularjs"></a>
 ####AngularJS
 Include angular.js and the umbraco-angular.js file (see example html).
 
@@ -92,7 +96,7 @@ Example html.
 </body>
 </html>
 ```
-
+<a name="umbraco"></a>
 ####Umbraco
 For testing, create a new VS solution (I called it UmbracoTest) and download/install the umbraco cms nuget package. Then when the installation is complete install the umbraco txt starter kit
 to have something to start with. In my example below I have used that starter kit. I created a folder called services to put my UmbracoApiController in.
@@ -226,9 +230,7 @@ namespace UmbracoTest.Services.Models
         public string HostName { get; set; }
 
         public static ViewNode Create(Node node)
-        {
-            
-
+        {            
             return new ViewNode
             {
                 NiceUrl = node.NiceUrl,
