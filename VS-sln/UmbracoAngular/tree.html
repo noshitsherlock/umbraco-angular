@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body ng-app="app">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+    <div ng-controller="treeController" ng-init="GetTree()">
+        <p ng-bind="view.Tree"></p>
+    </div>
+
+    <!--Angular-->
+    <script src="Scripts/angular.js"></script>
+
+    <!--App-->
+    <script src="Scripts/app/app.js"></script>
+
+    <!--Controllers-->
+    <script src="Scripts/app/controllers/index.js"></script>
+    <script src="Scripts/app/controllers/about.js"></script>
+    <script src="Scripts/app/controllers/tree.js"></script>
+
+    <!--Plugins-->
+    <script src="Scripts/umbraco.angular.js"></script>
+</body>
+</html>

@@ -58,7 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="about.html" />
+    <Content Include="stores.html" />
+    <Content Include="Scripts\app\controllers\stores.js" />
+    <Content Include="tree.html" />
     <Content Include="Scripts\app\controllers\about.js" />
+    <Content Include="Scripts\app\controllers\tree.js" />
     <Content Include="Scripts\version.json" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
