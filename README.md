@@ -5,10 +5,6 @@
 The project is all about using umbraco CMS only for content and consuming it from a different site built in what ever technique of choice.
 More than once have I come across the situation where I wan't to (or have to) use a different frontend than the one that comes with umbraco.
 
-I recently worked on a project that used nopcommerce (http://nopcommerce.com/) as the e-commerce platform. Since nopcommerce is
-a commerce solution it does not contain any good CMS support and in todays market you have to very dynamic and change all the time so some kind
-of CMS is a must! Or else, you are doing it wrong ;)
-
 Below you can read about the following. Creating a simple application with angularjs. Setting up the application with the UmbracoAngular provider.
 
 I have also included the entire UmbracoApiController that I use to extract data from umbraco. I have based my example on a new umbraco 7.0.4 installation
@@ -127,8 +123,7 @@ namespace UmbracoTest.Services
             var node = new Node(id);
 
             if (node.Id == 0)
-                return NodeNotFound();
-            
+                return NodeNotFound();            
 
             var viewNode = ViewNode.Create(node);
 
@@ -184,7 +179,7 @@ namespace UmbracoTest.Services
 }
 ```
 
-Also allow CORS. This need to be modified if you wan't to allow any other hosts than localhost.
+Also allow CORS. This need to be modified if you wan't to allow any other hosts than localhost. If you use xdomain (described below), you don't have to configure this for specific hosts since configuring xdomain takes care of that for you.
 
 **/Services/AllowCrossSiteJsonAttribute.cs**
 ```c#
