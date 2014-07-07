@@ -3,12 +3,9 @@
 ***
 
 The project is all about using umbraco CMS only for content and consuming it from a different site built in what ever technique of choice.
-More than once have I come across the situation where I wan't to (or have to) use a different frontend than the one that comes with umbraco.
+More than once have I come across the situation where I wan't to (or have to) use a different frontend than the one that comes with umbraco. A live example of the project is supporting this underpage, [http://www.elon.se/stockholm](http://www.elon.se/stockholm).
 
-Below you can read about the following. Creating a simple application with angularjs. Setting up the application with the UmbracoAngular provider.
-
-I have also included the entire UmbracoApiController that I use to extract data from umbraco. I have based my example on a new umbraco 7.0.4 installation
-from nuget and installed the umbraco txt starter kit.
+Below you can read about the following. Creating a simple application with angularjs, setting up the application with the UmbracoAngular provider and also i included the entire UmbracoApiController that I use to extract data from umbraco. I have based my example on a new umbraco 7.0.4 installation from nuget and installed the umbraco txt starter kit.
 
 * [AngularJS application setup](#angularjs)
 * [Umbraco application setup](#umbraco)
