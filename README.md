@@ -25,7 +25,7 @@ Include angular.js and the umbraco-angular.js file (see example html).
 
 Start by creating your application and injecting the umbraco-angular module (located under src/scripts/umbraco.angular.js) and configuring it.
 
-/scripts/app/app.js
+**/scripts/app/app.js**
 ```javascript
 var app = angular.module("app", ['umbraco.angular']);
 
