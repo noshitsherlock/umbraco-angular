@@ -5,11 +5,12 @@
 The project is all about using umbraco CMS only for content and consuming it from a different site built in what ever technique of choice.
 More than once have I come across the situation where I wan't to (or have to) use a different frontend than the one that comes with umbraco. A live example of the project is supporting this underpage, [http://www.elon.se/stockholm](http://www.elon.se/stockholm).
 
-Below you can read about the following. Creating a simple application with angularjs, setting up the application with the UmbracoAngular provider. I have based my example on a new umbraco 7.1.4 installation from nuget and installed the umbraco txt starter kit. I included the source for my UmbracoApiController if you would like to add it to your existing umbraco project. Otherwise you can download this repo [UmbracoNodeApi](https://github.com/noshitsherlock/UmbracoNodeApi). It is the full project I created for testing out umbraco-angular and is the quickest way to start out.
+Below you can read about the following. Creating a simple application with angularjs, setting up the application with the UmbracoAngular provider. I have based my example on a new umbraco 7.1.4 installation from nuget and installed the umbraco txt starter kit. I included the source for my [UmbracoApiController](#umbraco) if you would like to add it to your existing umbraco project. Otherwise you can download this repo [UmbracoNodeApi](https://github.com/noshitsherlock/UmbracoNodeApi). It is the full project I created for testing out umbraco-angular and is the quickest way to start out.
 
 * [AngularJS application setup](#angularjs)
 * [Umbraco application setup](#umbraco)
 * [Make all this work in IE8](#ie8)
+* [Quick start](#quick)
 
 ***
 
@@ -281,6 +282,14 @@ Then master template or the html page that calls the service. Add this script at
 ```
 
 Thats all!
+
+<a name="quick"></a>
+###Quick start
+1. Download [UmbracoNodeApi]() and run the solution.
+2. Download this repo and configure the url of the running umbraco solution in the app.js file.
+3. Open your favourite browser and open the index.html file with it. 
+4. Done!
+
 
 ***
 
