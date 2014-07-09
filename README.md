@@ -285,7 +285,7 @@ Thats all!
 
 <a name="quick"></a>
 ###Quick start
-1. Download [UmbracoNodeApi]() and run the solution.
+1. Download [UmbracoNodeApi](https://github.com/noshitsherlock/UmbracoNodeApi) and run the solution.
 2. Download this repo and configure the url of the running umbraco solution in the app.js file.
 3. Open your favourite browser and open the index.html file with it. 
 4. Done!
