@@ -18,7 +18,7 @@ Below you can read about the following. Creating a simple application with angul
 ### Start
 ***
 <a name="angularjs"></a>
-####AngularJS
+#### AngularJS
 Include angular.js and the umbraco-angular.js file (see example html).
 
 Start by creating your application and injecting the umbraco-angular module (located under src/scripts/umbraco.angular.js) and configuring it.
@@ -92,7 +92,7 @@ Example html.
 </html>
 ```
 <a name="umbraco"></a>
-####Umbraco
+#### Umbraco
 For testing, create a new VS solution (I called it UmbracoTest) and download/install the umbraco cms nuget package. When the installation is complete install the umbraco txt starter kit
 to have something to start with. In my example below I have used that starter kit. I created a folder called services to put my UmbracoApiController in.
 
